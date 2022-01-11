@@ -1,0 +1,11 @@
+- name: Install zsh
+  dnf:
+    name: zsh
+  tags:
+    - install
+    - zsh
+- name: Change shell to zsh
+  shell: chsh -s $(which zsh)
+  tags:
+    - install
+    - zsh

@@ -1,0 +1,47 @@
+- name: Setup RPM fusion
+  become: yes
+  dnf:
+    name: "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ansible_distribution_major_version}}.noarch.rpm"
+    disable_gpg_check: yes
+  tags:
+  - install
+  - apps
+- name: Download Slack
+  get_url:
+    url: https://downloads.slack-edge.com/releases/linux/4.23.0/prod/x64/slack-4.23.0-0.1.fc21.x86_64.rpm
+    dest: /tmp/slack-4.23.0.rpm
+  tags:
+  - install
+  - apps
+- name: Download tidal-hifi
+  get_url:
+    url: https://github.com/Mastermindzh/tidal-hifi/releases/download/2.7.0/tidal-hifi-2.7.0.x86_64.rpm
+    dest: /tmp/tidal-hifi-2.7.0.rpm
+  tags:
+  - install
+  - apps
+- name: Install Apps
+  become: yes
+  dnf:
+    name:
+      - xournalpp
+      - geary
+      - krita
+      - discord
+      - thunar
+  tags:
+  - install
+  - apps
+  tags:
+  - install
+  - apps
+- name: Install Apps (no GPG)
+  become: yes
+  dnf:
+    name:
+      - /tmp/slack-4.23.0.rpm
+      - /tmp/tidal-hifi-2.7.0.rpm
+    disable_gpg_check: yes
+  tags:
+  - install
+  - apps

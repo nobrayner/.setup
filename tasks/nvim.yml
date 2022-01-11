@@ -1,0 +1,8 @@
+- name: Install Neovim
+  become: yes
+  dnf:
+    name:
+      - neovim
+  tags:
+  - install
+  - nvim

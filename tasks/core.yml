@@ -1,0 +1,9 @@
+- name: Install Core Packages
+  become: yes
+  dnf:
+    name:
+      - htop
+      - httpie
+  tags:
+  - install
+  - core
