@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+## Install ansible
+sudo dnf install -y ansible git
+
+git clone https://github.com/nobrayner/.setup.git ~/.setup
+
+cd ~/.setup
+ansible-playbook --ask-become --ask-vault-pass install.yml
+
+git remote set-url origin git@github.com:nobrayner/.setup.git

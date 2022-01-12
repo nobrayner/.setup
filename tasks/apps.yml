@@ -6,6 +6,16 @@
   tags:
   - install
   - apps
+- name: Add brave browser repo
+  become: yes
+  shell:
+    cmd: |
+      dnf install dnf-plugins-core
+      dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
+      rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+  tags:
+    - install
+    - apps
 - name: Download Slack
   get_url:
     url: https://downloads.slack-edge.com/releases/linux/4.23.0/prod/x64/slack-4.23.0-0.1.fc21.x86_64.rpm
@@ -20,6 +30,13 @@
   tags:
   - install
   - apps
+- name: Download xppen driver
+  get_url:
+    url: https://www.xp-pen.com/download/file/id/1948/pid/523/ext/rpm.html
+    dest: /tmp/xppen-3.2.1.211019-1.rpm
+  tags:
+  - install
+  - apps
 - name: Install Apps
   become: yes
   dnf:
@@ -29,6 +46,8 @@
       - krita
       - discord
       - thunar
+      - alacritty
+      - brave-browser
   tags:
   - install
   - apps
@@ -41,6 +60,7 @@
     name:
       - /tmp/slack-4.23.0.rpm
       - /tmp/tidal-hifi-2.7.0.rpm
+      - /tmp/xppen-3.2.1.211019-1.rpm
     disable_gpg_check: yes
   tags:
   - install

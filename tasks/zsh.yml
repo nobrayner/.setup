@@ -1,10 +1,14 @@
 - name: Install zsh
+  become: yes
   dnf:
-    name: zsh
+    name:
+      - zsh
+      - util-linux-user
   tags:
     - install
     - zsh
 - name: Change shell to zsh
+  become: yes
   shell: chsh -s $(which zsh)
   tags:
     - install

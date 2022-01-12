@@ -4,6 +4,35 @@
     name:
       - htop
       - httpie
+      - xrandr
   tags:
   - install
   - core
+- name: Download starship
+  get_url:
+    url: https://starship.rs/install.sh
+    dest: /tmp/starship.sh
+  tags:
+    - install
+    - core
+- name: Install starship
+  shell:
+    cmd: cat /tmp/starship.sh | sh -s -- -y
+  tags:
+    - install
+    - core
+- name: Install Fonts
+  become: yes
+  copy:
+    src: "{{ lookup('env', 'HOME') }}/.setup/fonts"
+    dest: /usr/local/share/fonts/
+  tags:
+    - install
+    - core
+- name: Update font cache
+  become: yes
+  shell:
+    cmd: fc-cache
+  tags:
+    - install
+    - core
