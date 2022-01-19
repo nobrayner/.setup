@@ -19,7 +19,7 @@
     - dotfiles
     - stow
 - name: Stow dotfiles
-  shell: cd $HOME/.dotfiles && ./stow
+  shell: cd ~/.dotfiles && ./stow
   tags:
     - install
     - dotfiles

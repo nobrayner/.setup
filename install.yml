@@ -9,5 +9,5 @@
     - include: ./tasks/apps.yml
     - include: ./tasks/nvim.yml
     - include: ./tasks/git-config.yml
-    - include: ./tasks/dotfiles.yml
     - include: ./tasks/zsh.yml
+    - include: ./tasks/dotfiles.yml

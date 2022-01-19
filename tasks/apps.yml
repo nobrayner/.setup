@@ -37,6 +37,13 @@
   tags:
   - install
   - apps
+- name: Download Zoom
+  get_url:
+    url: https://zoom.us/client/latest/zoom_x86_64.rpm
+    dest: /tmp/zoom.rpm
+  tags:
+  - install
+  - apps
 - name: Install Apps
   become: yes
   dnf:
@@ -48,6 +55,8 @@
       - thunar
       - alacritty
       - brave-browser
+      - ImageMagick
+      - tmux
   tags:
   - install
   - apps
@@ -61,6 +70,7 @@
       - /tmp/slack-4.23.0.rpm
       - /tmp/tidal-hifi-2.7.0.rpm
       - /tmp/xppen-3.2.1.211019-1.rpm
+      - /tmp/zoom.rpm
     disable_gpg_check: yes
   tags:
   - install
