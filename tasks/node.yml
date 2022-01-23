@@ -1,0 +1,16 @@
+- name: Install node
+  become: yes
+  dnf:
+    name:
+      - nodejs
+  tags:
+    - install
+    - node
+- name: Install yarn
+  become: yes
+  npm:
+    name: yarn
+    global: yes
+  tags:
+    - install
+    - node
