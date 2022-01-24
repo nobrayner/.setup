@@ -25,8 +25,8 @@
   - apps
 - name: Download tidal-hifi
   get_url:
-    url: https://github.com/Mastermindzh/tidal-hifi/releases/download/2.7.0/tidal-hifi-2.7.0.x86_64.rpm
-    dest: /tmp/tidal-hifi-2.7.0.rpm
+    url: https://github.com/Mastermindzh/tidal-hifi/releases/download/2.7.1/tidal-hifi-2.7.1.x86_64.rpm
+    dest: /tmp/tidal-hifi-2.7.1.rpm
   tags:
   - install
   - apps
