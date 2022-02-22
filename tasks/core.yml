@@ -8,6 +8,7 @@
       - xrandr
       - xset
       - ripgrep
+      - jq
   tags:
   - install
   - core
