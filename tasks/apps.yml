@@ -6,13 +6,14 @@
   tags:
   - install
   - apps
-- name: Add brave browser repo
+- name: Add repos
   become: yes
   shell:
     cmd: |
       dnf install dnf-plugins-core
       dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
       rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+      dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
   tags:
     - install
     - apps
@@ -44,6 +45,23 @@
   tags:
   - install
   - apps
+- name: Download DBeaver
+  get_url:
+    url: https://dbeaver.io/files/dbeaver-ce-latest-stable.x86_64.rpm
+    dest: /tmp/dbeaver-latest.rpm
+  tags:
+  - install
+  - apps
+- name: Remove Conflicting Apps
+  become: yes
+  dnf:
+    name:
+      - podman
+      - buildah
+    state: absent
+  tags:
+    - install
+    - apps
 - name: Install Apps
   become: yes
   dnf:
@@ -57,6 +75,10 @@
       - brave-browser
       - ImageMagick
       - tmux
+      - docker-ce
+      - docker-compose
+      - docker-ce-cli
+      - containerd.io
   tags:
   - install
   - apps
@@ -71,7 +93,26 @@
       - /tmp/tidal-hifi-2.7.0.rpm
       - /tmp/xppen-3.2.1.211019-1.rpm
       - /tmp/zoom.rpm
+      - /tmp/dbeaver-latest.rpm
     disable_gpg_check: yes
   tags:
   - install
   - apps
+- name: Start Docker
+  become: yes
+  shell:
+    cmd: |
+      systemctl start docker.service
+      systemctl start containerd.service
+      systemctl enable docker.service
+      systemctl enable containerd.service
+  tags:
+    - install
+    - apps
+- name: Use Docker without sudo
+  become: yes
+  shell:
+    cmd: usermod -aG docker $USER
+  tags:
+    - install
+    - apps

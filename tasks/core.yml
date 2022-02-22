@@ -4,7 +4,10 @@
     name:
       - htop
       - httpie
+      - xclip
       - xrandr
+      - xset
+      - ripgrep
   tags:
   - install
   - core
