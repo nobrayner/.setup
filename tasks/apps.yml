@@ -4,8 +4,8 @@
     name: "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ansible_distribution_major_version}}.noarch.rpm"
     disable_gpg_check: yes
   tags:
-  - install
-  - apps
+    - install
+    - apps
 - name: Add repos
   become: yes
   shell:
@@ -22,29 +22,29 @@
     url: https://downloads.slack-edge.com/releases/linux/4.23.0/prod/x64/slack-4.23.0-0.1.fc21.x86_64.rpm
     dest: /tmp/slack-4.23.0.rpm
   tags:
-  - install
-  - apps
+    - install
+    - apps
 - name: Download tidal-hifi
   get_url:
     url: https://github.com/Mastermindzh/tidal-hifi/releases/download/2.7.1/tidal-hifi-2.7.1.x86_64.rpm
     dest: /tmp/tidal-hifi-2.7.1.rpm
   tags:
-  - install
-  - apps
+    - install
+    - apps
 - name: Download xppen driver
   get_url:
     url: https://www.xp-pen.com/download/file/id/1948/pid/523/ext/rpm.html
     dest: /tmp/xppen-3.2.1.211019-1.rpm
   tags:
-  - install
-  - apps
+    - install
+    - apps
 - name: Download Zoom
   get_url:
     url: https://zoom.us/client/latest/zoom_x86_64.rpm
     dest: /tmp/zoom.rpm
   tags:
-  - install
-  - apps
+    - install
+    - apps
 - name: Download DBeaver
   get_url:
     url: https://dbeaver.io/files/dbeaver-ce-latest-stable.x86_64.rpm
@@ -80,11 +80,8 @@
       - docker-ce-cli
       - containerd.io
   tags:
-  - install
-  - apps
-  tags:
-  - install
-  - apps
+    - install
+    - apps
 - name: Install Apps (no GPG)
   become: yes
   dnf:
@@ -96,8 +93,8 @@
       - /tmp/dbeaver-latest.rpm
     disable_gpg_check: yes
   tags:
-  - install
-  - apps
+    - install
+    - apps
 - name: Start Docker
   become: yes
   shell:
