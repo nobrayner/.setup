@@ -14,3 +14,11 @@
   tags:
     - install
     - git
+- name: Set git init branch to main
+  git_config:
+    name: init.defaultBranch
+    scope: global
+    value: "main"
+  tags:
+    - install
+    - git
