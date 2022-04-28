@@ -14,6 +14,7 @@
       dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
       rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
       dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+      dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
   tags:
     - install
     - apps
@@ -79,6 +80,7 @@
       - docker-compose
       - docker-ce-cli
       - containerd.io
+      - gh
   tags:
     - install
     - apps
@@ -103,13 +105,6 @@
       systemctl start containerd.service
       systemctl enable docker.service
       systemctl enable containerd.service
-  tags:
-    - install
-    - apps
-- name: Use Docker without sudo
-  become: yes
-  shell:
-    cmd: usermod -aG docker $USER
   tags:
     - install
     - apps
