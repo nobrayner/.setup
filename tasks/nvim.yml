@@ -1,8 +1,41 @@
-- name: Install Neovim
+- name: Install Neovim build reqs
   become: yes
   dnf:
     name:
-      - neovim
+      - ninja-build
+      - libtool
+      # - libtool-bin
+      - autoconf
+      - automake
+      - cmake
+      - g++
+      - pkg-config
+      - unzip
+      - doxygen
   tags:
-  - install
-  - nvim
+    - install
+    - nvim
+- name: Clone Neovim
+  git:
+    repo: 'https://github.com/neovim/neovim.git'
+    dest: "{{ lookup('env', 'HOME') }}/.sources/neovim"
+    version: 'release-0.7'
+  tags:
+    - install
+    - nvim
+- name: Build Neovim
+  make:
+    chdir: "{{ lookup('env', 'HOME') }}/.sources/neovim"
+    params:
+      CMAKE_BUILD_TYPE: Release
+  tags:
+    - install
+    - nvim
+- name: Install Neovim
+  become: yes
+  make:
+    chdir: "{{ lookup('env', 'HOME') }}/.sources/neovim"
+    target: install
+  tags:
+    - install
+    - nvim
