@@ -20,8 +20,8 @@
     - apps
 - name: Download Slack
   get_url:
-    url: https://downloads.slack-edge.com/releases/linux/4.23.0/prod/x64/slack-4.23.0-0.1.fc21.x86_64.rpm
-    dest: /tmp/slack-4.23.0.rpm
+    url: https://downloads.slack-edge.com/releases/linux/4.25.0/prod/x64/slack-4.25.0-0.1.fc21.x86_64.rpm
+    dest: /tmp/slack-4.25.0.rpm
   tags:
     - install
     - apps
