@@ -1,41 +1,21 @@
-- name: Setup RPM fusion
-  become: yes
-  dnf:
-    name: "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ansible_distribution_major_version}}.noarch.rpm"
-    disable_gpg_check: yes
-  tags:
-    - install
-    - apps
-- name: Add repos
-  become: yes
-  shell:
-    cmd: |
-      dnf install dnf-plugins-core
-      dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
-      rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-      dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-      dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
-  tags:
-    - install
-    - apps
 - name: Download Slack
   get_url:
-    url: https://downloads.slack-edge.com/releases/linux/4.25.0/prod/x64/slack-4.25.0-0.1.fc21.x86_64.rpm
-    dest: /tmp/slack-4.25.0.rpm
+    url: https://downloads.slack-edge.com/releases/linux/4.26.1/prod/x64/slack-4.26.1-0.1.fc21.x86_64.rpm
+    dest: /tmp/slack.rpm
   tags:
     - install
     - apps
 - name: Download tidal-hifi
   get_url:
     url: https://github.com/Mastermindzh/tidal-hifi/releases/download/2.7.1/tidal-hifi-2.7.1.x86_64.rpm
-    dest: /tmp/tidal-hifi-2.7.1.rpm
+    dest: /tmp/tidal-hifi.rpm
   tags:
     - install
     - apps
 - name: Download xppen driver
   get_url:
     url: https://www.xp-pen.com/download/file/id/1948/pid/523/ext/rpm.html
-    dest: /tmp/xppen-3.2.1.211019-1.rpm
+    dest: /tmp/xppen.rpm
   tags:
     - install
     - apps
@@ -46,18 +26,10 @@
   tags:
     - install
     - apps
-- name: Download DBeaver
-  get_url:
-    url: https://dbeaver.io/files/dbeaver-ce-latest-stable.x86_64.rpm
-    dest: /tmp/dbeaver-latest.rpm
-  tags:
-  - install
-  - apps
 - name: Remove Conflicting Apps
   become: yes
   dnf:
     name:
-      - podman
       - buildah
     state: absent
   tags:
@@ -73,13 +45,11 @@
       - discord
       - thunar
       - alacritty
+      - kitty
       - brave-browser
       - ImageMagick
       - tmux
-      - docker-ce
-      - docker-compose
-      - docker-ce-cli
-      - containerd.io
+      - podman
       - gh
   tags:
     - install
@@ -88,23 +58,11 @@
   become: yes
   dnf:
     name:
-      - /tmp/slack-4.23.0.rpm
-      - /tmp/tidal-hifi-2.7.0.rpm
-      - /tmp/xppen-3.2.1.211019-1.rpm
+      - /tmp/slack.rpm
+      - /tmp/tidal-hifi.rpm
+      - /tmp/xppen.rpm
       - /tmp/zoom.rpm
-      - /tmp/dbeaver-latest.rpm
     disable_gpg_check: yes
-  tags:
-    - install
-    - apps
-- name: Start Docker
-  become: yes
-  shell:
-    cmd: |
-      systemctl start docker.service
-      systemctl start containerd.service
-      systemctl enable docker.service
-      systemctl enable containerd.service
   tags:
     - install
     - apps

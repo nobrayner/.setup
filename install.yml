@@ -6,6 +6,7 @@
     - include: ./tasks/ssh.yml
     - include: ./tasks/core.yml
     - include: ./tasks/bspwm.yml
+    - include: ./tasks/app-setup.yml
     - include: ./tasks/apps.yml
     - include: ./tasks/git-config.yml
     - include: ./tasks/nvim.yml
