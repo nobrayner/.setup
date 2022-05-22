@@ -9,6 +9,7 @@
       - xset
       - ripgrep
       - jq
+      - fzf
   tags:
   - install
   - core
