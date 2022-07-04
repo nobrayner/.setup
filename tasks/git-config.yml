@@ -22,3 +22,19 @@
   tags:
     - install
     - git
+- name: Prune on pull/fetch
+  git_config:
+    name: remote.origin.prune
+    scope: global
+    value: true
+  tags:
+    - install
+    - git
+- name: Prune on pull/fetch
+  git_config:
+    name: pull.rebase
+    scope: global
+    value: true
+  tags:
+    - install
+    - git
