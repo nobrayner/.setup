@@ -23,11 +23,18 @@
   tags:
     - install
     - nvim
+- name: Clean Old Build
+  make:
+    chdir: "{{ lookup('env', 'HOME') }}/.sources/neovim"
+    target: distclean
+  tags:
+    - install
+    - nvim
 - name: Build Neovim
   make:
     chdir: "{{ lookup('env', 'HOME') }}/.sources/neovim"
     params:
-      CMAKE_BUILD_TYPE: Release
+      CMAKE_BUILD_TYPE: RelWithDebInfo
   tags:
     - install
     - nvim
