@@ -20,6 +20,7 @@
     repo: 'https://github.com/neovim/neovim.git'
     dest: "{{ lookup('env', 'HOME') }}/.sources/neovim"
     depth: 1
+    version: master
   tags:
     - install
     - nvim
