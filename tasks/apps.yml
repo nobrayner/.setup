@@ -1,14 +1,35 @@
-- name: Download Slack
+- name: Get Planetscale CLI url
+  shell:
+    cmd: curl -s https://api.github.com/repos/planetscale/cli/releases | grep browser_download_url | grep 'amd64[.]rpm' | head -n 1 | cut -d '"' -f 4
+  register: pscalecliurl
+  tags:
+    - install
+    - apps
+- name: Download Planetscale CLI
   get_url:
-    url: https://downloads.slack-edge.com/releases/linux/4.26.1/prod/x64/slack-4.26.1-0.1.fc21.x86_64.rpm
-    dest: /tmp/slack.rpm
+    url: '{{ pscalecliurl.stdout }}'
+    dest: /tmp/pscale.rpm
+  tags:
+    - install
+    - apps
+- name: Get tidal-hifi url
+  shell:
+    cmd: curl -s https://api.github.com/repos/Mastermindzh/tidal-hifi/releases | grep browser_download_url | grep 'x86_64[.]rpm' | head -n 1 | cut -d '"' -f 4
+  register: tidalhifiurl
   tags:
     - install
     - apps
 - name: Download tidal-hifi
   get_url:
-    url: https://github.com/Mastermindzh/tidal-hifi/releases/download/3.1.0/tidal-hifi-3.1.0.x86_64.rpm
+    url: '{{ tidalhifiurl.stdout }}'
     dest: /tmp/tidal-hifi.rpm
+  tags:
+    - install
+    - apps
+- name: Download Slack
+  get_url:
+    url: https://downloads.slack-edge.com/releases/linux/4.26.1/prod/x64/slack-4.26.1-0.1.fc21.x86_64.rpm
+    dest: /tmp/slack.rpm
   tags:
     - install
     - apps
@@ -63,6 +84,7 @@
       - /tmp/tidal-hifi.rpm
       - /tmp/xppen.rpm
       - /tmp/zoom.rpm
+      - /tmp/pscale.rpm
     disable_gpg_check: yes
   tags:
     - install
