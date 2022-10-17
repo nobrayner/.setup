@@ -1,5 +1,5 @@
 - name: Install node
-  become: yes
+  become: true
   dnf:
     name:
       - nodejs
@@ -7,7 +7,7 @@
     - install
     - node
 - name: Install yarn
-  become: yes
+  become: true
   npm:
     name: yarn
     global: yes

@@ -1,10 +1,9 @@
 - name: Install Neovim build reqs
-  become: yes
+  become: true
   dnf:
     name:
       - ninja-build
       - libtool
-      # - libtool-bin
       - autoconf
       - automake
       - cmake
@@ -40,7 +39,7 @@
     - install
     - nvim
 - name: Install Neovim
-  become: yes
+  become: true
   make:
     chdir: "{{ lookup('env', 'HOME') }}/.sources/neovim"
     target: install

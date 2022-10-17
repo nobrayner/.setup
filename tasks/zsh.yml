@@ -1,5 +1,5 @@
 - name: Install zsh
-  become: yes
+  become: true
   dnf:
     name:
       - zsh

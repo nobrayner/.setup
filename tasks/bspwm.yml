@@ -1,5 +1,5 @@
 - name: Install Packages (BSPWM)
-  become: yes
+  become: true
   dnf:
     name:
     - bspwm
@@ -8,20 +8,50 @@
     - picom
     - polybar
     - rofi
+    - autoconf
+    - automake
+    - cairo-devel
+    - fontconfig
+    - gcc
+    - libev-devel
+    - libjpeg-turbo-devel
+    - libXinerama
+    - libxkbcommon-devel
+    - libxkbcommon-x11-devel
+    - libXrandr
+    - pam-devel
+    - pkgconf
+    - xcb-util-image-devel
+    - xcb-util-xrm-devel
     state: latest
   tags:
-  - install
-  - bspwm
+    - install
+    - bspwm
+- name: Clone i3lock-color
+  git:
+    repo: 'https://github.com/Raymo111/i3lock-color.git'
+    dest: "{{ lookup('env', 'HOME') }}/.sources/i3lock-color"
+    depth: 1
+  tags:
+    - install
+    - bspwm
+- name: Install i3lock-color
+  shell:
+    chdir: "{{ lookup('env', 'HOME') }}/.sources/i3lock-color"
+    cmd: "./install-i3lock-color.sh"
+  tags:
+    - install
+    - bspwm
 - name: Install pip
-  become: yes
+  become: true
   dnf:
     name: python3-pip
   tags:
-  - install
-  - bspwm
+    - install
+    - bspwm
 - name: Install pywal
   pip:
     name: pywal
   tags:
-  - install
-  - bspwm
+    - install
+    - bspwm

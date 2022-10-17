@@ -48,7 +48,7 @@
     - install
     - apps
 - name: Remove Conflicting Apps
-  become: yes
+  become: true
   dnf:
     name:
       - buildah
@@ -57,13 +57,12 @@
     - install
     - apps
 - name: Install Apps
-  become: yes
+  become: true
   dnf:
     name:
       - xournalpp
       - geary
       - krita
-      - discord
       - thunar
       - alacritty
       - kitty
@@ -73,18 +72,18 @@
       - podman
       - gh
       - flameshot
+      - community-mysql
   tags:
     - install
     - apps
 - name: Install Apps (no GPG)
-  become: yes
+  become: true
   dnf:
     name:
       - /tmp/slack.rpm
       - /tmp/tidal-hifi.rpm
       - /tmp/xppen.rpm
       - /tmp/zoom.rpm
-      - /tmp/pscale.rpm
     disable_gpg_check: yes
   tags:
     - install

@@ -1,5 +1,5 @@
 - name: Install Core Packages
-  become: yes
+  become: true
   dnf:
     name:
       - htop
@@ -27,7 +27,7 @@
     - install
     - core
 - name: Install Fonts
-  become: yes
+  become: true
   copy:
     src: "{{ lookup('env', 'HOME') }}/.setup/fonts"
     dest: /usr/local/share/fonts/
@@ -35,7 +35,7 @@
     - install
     - core
 - name: Update font cache
-  become: yes
+  become: true
   shell:
     cmd: fc-cache
   tags:
