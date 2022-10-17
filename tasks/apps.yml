@@ -1,17 +1,3 @@
-- name: Get Planetscale CLI url
-  shell:
-    cmd: curl -s https://api.github.com/repos/planetscale/cli/releases | grep browser_download_url | grep 'amd64[.]rpm' | head -n 1 | cut -d '"' -f 4
-  register: pscalecliurl
-  tags:
-    - install
-    - apps
-- name: Download Planetscale CLI
-  get_url:
-    url: '{{ pscalecliurl.stdout }}'
-    dest: /tmp/pscale.rpm
-  tags:
-    - install
-    - apps
 - name: Get tidal-hifi url
   shell:
     cmd: curl -s https://api.github.com/repos/Mastermindzh/tidal-hifi/releases | grep browser_download_url | grep 'x86_64[.]rpm' | head -n 1 | cut -d '"' -f 4
