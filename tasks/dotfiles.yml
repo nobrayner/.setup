@@ -5,7 +5,6 @@
   tags:
     - install
     - dotfiles
-    - stow
 - name: Cloning .dotfiles
   git:
     repo: 'git@github.com:nobrayner/.dotfiles.git'
@@ -17,7 +16,6 @@
   tags:
     - install
     - dotfiles
-    - stow
 - name: Stow dotfiles
   shell: cd ~/.dotfiles && ./stow
   tags:
