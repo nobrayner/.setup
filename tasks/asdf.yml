@@ -1,0 +1,35 @@
+- name: Clone asdf
+  git:
+    repo: 'https://github.com/asdf-vm/asdf.git'
+    dest: "{{ lookup('env', 'HOME') }}/.sources/asdf"
+    depth: 1
+    version: v0.10.2
+  tags:
+    - install
+    - asdf
+- name: Install asdf-nodejs deps
+  become: true
+  dnf:
+    name:
+      - python3
+      - gcc-c++
+      - make
+      - python3-pip
+  tags:
+    - install
+    - asdf
+- name: Install asdf-erlang deps
+  become: true
+  dnf:
+    name:
+      - ncurses-devel
+  tags:
+    - install
+    - asdf
+# TODO: Figure out why this errors about needing root - even if run as root
+# - name: Install asdf-nodejs
+#   shell:
+#     cmd: 'asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git'
+#   tags:
+#     - install
+#     - asdf
