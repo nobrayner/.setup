@@ -1,16 +1,14 @@
-- name: Install node
-  become: true
-  dnf:
-    name:
-      - nodejs
-  tags:
-    - install
-    - node
 - name: Install yarn
   become: true
   npm:
     name: yarn
     global: yes
+  tags:
+    - install
+    - node
+- name: Install pnpm
+  shell:
+    cmd: 'curl -fsSL https://get.pnpm.io/install.sh | sh -'
   tags:
     - install
     - node
