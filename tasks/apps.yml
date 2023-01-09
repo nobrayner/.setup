@@ -59,6 +59,7 @@
       - gh
       - flameshot
       - community-mysql
+      - syncthing
   tags:
     - install
     - apps

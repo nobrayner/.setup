@@ -4,6 +4,7 @@
     warn: false
   tags:
     - install
+    - sdkman
     - kotlin
 - name: Install Kotlin Compiler
   shell:
