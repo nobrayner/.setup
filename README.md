@@ -17,7 +17,5 @@ curl -sSf https://raw.githubusercontent.com/nobrayner/.setup/main/ansible-run | 
 - `node` - installs/updates node and related packages
 - `nvim` - installs/updates neovim
 - `rust` - installs/updates rust
-- `sdkman` - installs/updates sdkman
-    - `kotlin` - installs/updates kotlin
 - `ssh` - sets up ssh keys
 - `zsh` - installs/updates zsh
