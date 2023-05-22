@@ -1,21 +1,3 @@
-- name: Installing stow
-  become: true
-  dnf:
-    name: stow
-  tags:
-    - install
-    - dotfiles
-- name: Cloning .dotfiles
-  git:
-    repo: 'git@github.com:nobrayner/.dotfiles.git'
-    dest: "{{ lookup('env', 'HOME') }}/.dotfiles"
-    recursive: yes
-    update: yes
-    accept_hostkey: yes
-    version: main
-  tags:
-    - install
-    - dotfiles
 - name: Stow dotfiles
   shell: cd ~/.dotfiles && ./stow
   tags:

@@ -1,0 +1,197 @@
+- name: Setup RPM fusion
+  become: true
+  dnf:
+    name: "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ansible_distribution_major_version}}.noarch.rpm"
+    disable_gpg_check: yes
+  tags:
+    - init
+    - app-setup
+- name: Add repos
+  become: true
+  shell:
+    cmd: |
+      dnf install dnf-plugins-core
+      dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
+      rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+      dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+      dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+  tags:
+    - init
+    - app-setup
+- name: Install Core Packages
+  become: true
+  dnf:
+    name:
+      - htop
+      - httpie
+      - xclip
+      - xrandr
+      - xset
+      - ripgrep
+      - jq
+      - fzf
+      - stow
+  tags:
+  - init
+  - core
+- name: Ensure .ssh dir exists
+  file:
+    dest: "{{ dest_key | dirname }}"
+    mode: 0700
+    state: directory
+  tags:
+    - dotfiles
+    - init
+    - ssh
+- name: Install private ssh key
+  copy:
+    src: "{{ source_key }}"
+    dest: "{{ dest_key }}"
+    mode: 0600
+  tags:
+    - dotfiles
+    - init
+    - ssh
+- name: Install public ssh key
+  copy:
+    src: "{{ source_key }}.pub"
+    dest: "{{ dest_key }}.pub"
+    mode: 0644
+  tags:
+    - dotfiles
+    - init
+    - ssh
+- name: Set authorized key
+  authorized_key:
+    user: "{{ lookup('env', 'USER') }}"
+    state: present
+    key: "{{ lookup('file', item) }}"
+  with_fileglob:
+    - "{{ lookup('env', 'HOME') }}/.ssh/*.pub"
+  tags:
+    - dotfiles
+    - init
+    - ssh
+- name: Set git name
+  git_config:
+    name: user.name
+    scope: global
+    value: "Braydon Hall"
+  tags:
+    - init
+    - git
+- name: Set git email
+  git_config:
+    name: user.email
+    scope: global
+    value: "40751395+nobrayner@users.noreply.github.com"
+  tags:
+    - init
+    - git
+- name: Set git init branch to main
+  git_config:
+    name: init.defaultBranch
+    scope: global
+    value: "main"
+  tags:
+    - init
+    - git
+- name: Prune on pull/fetch
+  git_config:
+    name: remote.origin.prune
+    scope: global
+    value: true
+  tags:
+    - init
+    - git
+- name: Prune on pull/fetch
+  git_config:
+    name: pull.rebase
+    scope: global
+    value: true
+  tags:
+    - init
+    - git
+- name: Install zsh
+  become: true
+  dnf:
+    name:
+      - zsh
+      - util-linux-user
+  tags:
+    - init 
+    - zsh
+- name: Download starship
+  get_url:
+    url: https://starship.rs/install.sh
+    dest: /tmp/starship.sh
+  tags:
+    - init
+    - core
+- name: Install starship
+  shell:
+    cmd: cat /tmp/starship.sh | sh -s -- -y
+  tags:
+    - init
+    - core
+- name: Install Fonts
+  become: true
+  copy:
+    src: "{{ lookup('env', 'HOME') }}/.setup/fonts"
+    dest: /usr/local/share/fonts/
+  tags:
+    - init
+    - core
+- name: Update font cache
+  become: true
+  shell:
+    cmd: fc-cache
+  tags:
+    - init
+    - core
+- name: Cloning .dotfiles
+  git:
+    repo: 'git@github.com:nobrayner/.dotfiles.git'
+    dest: "{{ lookup('env', 'HOME') }}/.dotfiles"
+    recursive: yes
+    update: yes
+    accept_hostkey: yes
+    version: main
+  tags:
+    - init
+    - dotfiles
+- name: Clone asdf
+  git:
+    repo: 'https://github.com/asdf-vm/asdf.git'
+    dest: "{{ lookup('env', 'HOME') }}/.sources/asdf"
+    depth: 1
+    version: v0.11.2
+  tags:
+    - init
+    - asdf
+- name: Install asdf-nodejs deps
+  become: true
+  dnf:
+    name:
+      - python3
+      - gcc-c++
+      - make
+      - python3-pip
+  tags:
+    - init
+    - asdf
+- name: Install asdf-erlang deps
+  become: true
+  dnf:
+    name:
+      - ncurses-devel
+  tags:
+    - init
+    - asdf
+- name: Add nodejs asdf plugin
+  shell:
+    cmd: 'asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git'
+  ignore_errors: true
+  tags:
+    - init
+    - asdf

@@ -1,8 +1,12 @@
+- name: Install LTS Nodejs
+  shell:
+    cmd: '~/.sources/asdf/bin/asdf install nodejs'
+  tags:
+    - install
+    - node
 - name: Install yarn
-  become: true
-  npm:
-    name: yarn
-    global: yes
+  shell:
+    cmd: 'curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo'
   tags:
     - install
     - node

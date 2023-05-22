@@ -6,6 +6,12 @@ sudo dnf install -y ansible git
 git clone https://github.com/nobrayner/.setup.git ~/.setup
 
 cd ~/.setup
-ansible-playbook --ask-become --ask-vault-pass install.yml
+ansible-playbook --ask-become --ask-vault-pass -t init install.yml
 
 git remote set-url origin git@github.com:nobrayner/.setup.git
+
+chsh -s $(which zsh)  &> /dev/null
+
+ansible-playbook --ask-become -t install install.yml
+
+cd ~
