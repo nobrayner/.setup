@@ -7,7 +7,7 @@
     - apps
 - name: Download tidal-hifi
   get_url:
-    url: '{{ tidalhifiurl.stdout }}'
+    url: "{{ tidalhifiurl.stdout }}"
     dest: /tmp/tidal-hifi.rpm
   tags:
     - install
@@ -60,6 +60,7 @@
       - flameshot
       - community-mysql
       - syncthing
+      - playerctl
   tags:
     - install
     - apps
