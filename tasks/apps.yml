@@ -5,6 +5,7 @@
   tags:
     - install
     - apps
+    - tidal
 - name: Download tidal-hifi
   get_url:
     url: "{{ tidalhifiurl.stdout }}"
@@ -12,20 +13,38 @@
   tags:
     - install
     - apps
-- name: Download Slack
-  get_url:
-    url: https://downloads.slack-edge.com/releases/linux/4.26.1/prod/x64/slack-4.26.1-0.1.fc21.x86_64.rpm
-    dest: /tmp/slack.rpm
+    - tidal
+- name: Install tidal-hifi (no GPG)
+  become: true
+  dnf:
+    name:
+      - /tmp/tidal-hifi.rpm
+    disable_gpg_check: yes
   tags:
     - install
     - apps
-- name: Download xppen driver
-  get_url:
-    url: https://www.xp-pen.com/download/file/id/1948/pid/523/ext/rpm.html
-    dest: /tmp/xppen.rpm
+    - tidal
+- name: Get stripe-cli url
+  shell:
+    cmd: curl -s https://api.github.com/repos/stripe/stripe-cli/releases | grep browser_download_url | grep 'amd64[.]rpm' | head -n 1 | cut -d '"' -f 4
+  register: stripecliurl
   tags:
     - install
     - apps
+- name: Download stripe-cli
+  get_url:
+    url: "{{ stripecliurl.stdout }}"
+    dest: /tmp/stripe-cli.rpm
+  tags:
+    - install
+    - apps
+# - name: Download xppen driver
+#   get_url:
+#     url: https://www.xp-pen.com/download/file/id/1948/pid/523/ext/rpm.html
+#     dest: /tmp/xppen.rpm
+#   tags:
+#     - install
+#     - apps
 - name: Download Zoom
   get_url:
     url: https://zoom.us/client/latest/zoom_x86_64.rpm
@@ -56,11 +75,14 @@
       - ImageMagick
       - tmux
       - podman
+      - podman-compose
       - gh
       - flameshot
       - community-mysql
       - syncthing
       - playerctl
+      - task
+      - timew
   tags:
     - install
     - apps
@@ -68,9 +90,9 @@
   become: true
   dnf:
     name:
-      - /tmp/slack.rpm
       - /tmp/tidal-hifi.rpm
-      - /tmp/xppen.rpm
+      - /tmp/stripe-cli.rpm
+      # - /tmp/xppen.rpm
       - /tmp/zoom.rpm
     disable_gpg_check: yes
   tags:

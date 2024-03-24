@@ -14,6 +14,7 @@
   tags:
     - install
     - nvim
+    - neovim
 - name: Clone Neovim
   git:
     repo: 'https://github.com/neovim/neovim.git'
@@ -23,6 +24,7 @@
   tags:
     - install
     - nvim
+    - neovim
 - name: Clean Old Build
   make:
     chdir: "{{ lookup('env', 'HOME') }}/.sources/neovim"
@@ -30,6 +32,7 @@
   tags:
     - install
     - nvim
+    - neovim
 - name: Build Neovim
   make:
     chdir: "{{ lookup('env', 'HOME') }}/.sources/neovim"
@@ -38,6 +41,7 @@
   tags:
     - install
     - nvim
+    - neovim
 - name: Install Neovim
   become: true
   make:
@@ -46,6 +50,7 @@
   tags:
     - install
     - nvim
+    - neovim
 - name: Install Packer
   git:
     repo: 'https://github.com/wbthomason/packer.nvim'
@@ -54,3 +59,4 @@
   tags:
     - install
     - nvim
+    - neovim

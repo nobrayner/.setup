@@ -15,6 +15,7 @@
       rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
       dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
       dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+      dnf copr enable atim/lazygit -y
   tags:
     - init
     - app-setup
@@ -31,6 +32,7 @@
       - jq
       - fzf
       - stow
+      - lazygit
   tags:
   - init
   - core

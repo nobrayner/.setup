@@ -34,6 +34,7 @@
   tags:
     - install
     - core
+    - fonts
 - name: Update font cache
   become: true
   shell:
@@ -41,3 +42,4 @@
   tags:
     - install
     - core
+    - fonts
